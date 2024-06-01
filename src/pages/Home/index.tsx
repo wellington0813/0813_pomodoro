@@ -3,7 +3,7 @@ import { CountdownContainer, FormContainer, HomeContainer, MinutesAmountInput, S
 
 export function Home() {
     return (
-
+    // controlled / uncontrolled
         <HomeContainer>
             <form action="">
                 <FormContainer>
