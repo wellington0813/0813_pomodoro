@@ -12,7 +12,7 @@ export function Home() {
     }
 
     const task = watch('task')
-    const isSubmitDisa
+    const isSubmitDisabled = !task
 
     return (
         <HomeContainer>
@@ -54,7 +54,7 @@ export function Home() {
                     <span>0</span>
                 </CountdownContainer>
 
-                <StartCountdownButton disabled={!task}  type="submit">
+                <StartCountdownButton disabled={isSubmitDisabled}  type="submit">
                     <Play size={24} />
                     Começar
                 </StartCountdownButton>
