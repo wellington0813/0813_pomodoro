@@ -1,14 +1,30 @@
 import { Play } from "phosphor-react";
+import { useForm } from 'react-hook-form'
 import { CountdownContainer, FormContainer, HomeContainer, MinutesAmountInput, Separator, StartCountdownButton, TaskInput } from "./styles";
 
+// controlled / uncontrolled
+
 export function Home() {
+    const { register, handleSubmit, watch } = useForm()
+
+    function handleCreateNewCycle(data: any) {
+        console.log(data)
+    }
+
+    const task = watch('task')
+    const isSubmitDisa
+
     return (
-    // controlled / uncontrolled
         <HomeContainer>
-            <form action="">
+            <form onSubmit={handleSubmit(handleCreateNewCycle)} action="">
                 <FormContainer>
                     <label htmlFor="task">Vou trabalhar em </label>
-                    <TaskInput type="task" list="task-suggestions" placeholder="Dê um nome para seu projeto" />
+                    <TaskInput 
+                        id="task" 
+                        list="task-suggestions" 
+                        placeholder="Dê um nome para seu projeto" 
+                        {...register('task')}
+                    />
 
                     <datalist id="task-suggestions">
                         <option value="Projeto 1" />
@@ -18,7 +34,14 @@ export function Home() {
                     </datalist>
 
                     <label htmlFor="minuteAmout">durante</label>
-                    <MinutesAmountInput type="number" id="minutesAmount" placeholder="00" step={5} max={60} />
+                    <MinutesAmountInput 
+                        type="number" 
+                        id="minutesAmount" 
+                        placeholder="00" 
+                        step={5} 
+                        max={60} 
+                        {...register('minutesAmount', { valueAsNumber: true })}
+                    />
 
                     <span>minutos.</span>
                 </FormContainer>
@@ -31,13 +54,11 @@ export function Home() {
                     <span>0</span>
                 </CountdownContainer>
 
-                <StartCountdownButton type="submit">
+                <StartCountdownButton disabled={!task}  type="submit">
                     <Play size={24} />
                     Começar
                 </StartCountdownButton>
             </form>
         </HomeContainer>
-       
-    )
-        
+    )   
 }
