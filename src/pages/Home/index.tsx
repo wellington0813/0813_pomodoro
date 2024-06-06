@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from 'zod'
 
 import { CountdownContainer, FormContainer, HomeContainer, MinutesAmountInput, Separator, StartCountdownButton, TaskInput } from "./styles";
+import { useState } from "react";
 
 // controlled / uncontrolled
 
@@ -17,7 +18,15 @@ const newCycleFormValidationSchema = zod.object({
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
+interface Cycle {
+    id: string
+    task: string
+    minutesAmount: number
+}
+
 export function Home() {
+    const [cycles, setCycles] = useState<Cycle[]>([])
+
     const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
         resolver: zodResolver(newCycleFormValidationSchema),
         defaultValues: {
@@ -27,7 +36,14 @@ export function Home() {
     })
 
     function handleCreateNewCycle(data: NewCycleFormData) {
-        console.log(data)
+        const newCycle: cycle = {
+            id: String(new Date().getTime()),
+            task: data.task,
+            MinutesAmount: data.minutesAmount,
+        }
+
+        setCycles((state) => [...state, newCycles])
+
         reset()
     }
 
